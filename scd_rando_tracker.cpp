@@ -360,16 +360,15 @@ int main()
     // Setting things up on OBS can be a bit messy, but it works
     // Trust me ;)
     bool isBossActive[7] = {true, true, true, true, true, true, true};
-    string file_name = "track";
-    string file_index[7] = {"PP", "CC", "TT", "QQ", "WW", "SS", "MM"};
+    string file_name = "tracker";
     string file_ext = ".txt";
     ofstream file_pointer;
 
     // Initialization OBS integration
     for (int i = 0; i < 7; i++)
     {
-        file_pointer.open(file_name + file_index[i] + file_ext);
-        file_pointer << "XX";
+        file_pointer.open(file_name + file_ext);
+        file_pointer << "Ready";
         file_pointer.close();
     }
 
@@ -433,124 +432,146 @@ int main()
             }
         }
 
-        // Print out info about current stage
+        // Open file stream for OBS integration
+        // Print out and write on file info about current stage
         system("clear");
-        cout << "=============== " << "SEGMENT " << current_segment+1 << " of " << total_segment << " ===============" << endl;
+       
+        file_pointer.open(file_name + file_ext);
+
+        cout << "====" << " SEGMENT " << current_segment+1 << " of " << total_segment << " || " << "LEVELS VISITED " << segment.getNumStages() << " of " << "9 " << "====" << endl;
+        file_pointer << "====" << " SEGMENT " << current_segment+1 << " of " << total_segment << " || " << "LEVELS VISITED " << segment.getNumStages() << " of " << "9 " << "====" << endl;
+
         cout << "NOW ENTERING: " << GetZone(segment.getCurr()->getName()) << endl;
+        file_pointer << "NOW ENTERING: " << GetZone(segment.getCurr()->getName()) << endl;
+
         cout << "GOAL  : ";
+        file_pointer << "GOAL  : ";
+
         if (segment.getCurr()->getGoal() == NULL)
         {
             cout << " " << endl;
+            file_pointer << " " << endl;
         }
         else
         {
             cout << GetZone(segment.getCurr()->getGoal()->getName()) << endl;
+            file_pointer << GetZone(segment.getCurr()->getGoal()->getName()) << endl;
         }
+
         cout << "PAST  : ";
+        file_pointer << "PAST  : ";
+
         if (segment.getCurr()->getPast() == NULL)
         {
             cout << " " << endl;
+            file_pointer << " " << endl;
         }
         else
         {
             cout << GetZone(segment.getCurr()->getPast()->getName()) << endl;
+            file_pointer << GetZone(segment.getCurr()->getPast()->getName()) << endl;
         }
+
         cout << "FUTURE: ";
+        file_pointer << "FUTURE: ";
+
         if (segment.getCurr()->getFuture() == NULL)
         {
             cout << " " << endl;
+            file_pointer << " " << endl;
         }
         else
         {
             cout << GetZone(segment.getCurr()->getFuture()->getName()) << endl;
+            file_pointer << GetZone(segment.getCurr()->getFuture()->getName()) << endl;
         }
-        cout << endl;
 
-        // Print out all stages in current segment
-        // Print out their destinations for time travels
-        cout << "    " << "|   PAST    |" << " <<< " << "|   GOAL    |" << " >>> " << "|  FUTURE   |" << endl;
+        cout << endl;
+        file_pointer << endl;
+
+        // Print out and write on file all stages in current segment
+        // Print out and write on file their destinations for time travels
+
+        cout  << "|   PAST    |" << " <<< " << "|   GOAL    |" << " >>> " << "|  FUTURE   |" << endl;
+        file_pointer  << "|   PAST    |" << " <<< " << "|   GOAL    |" << " >>> " << "|  FUTURE   |" << endl;
+
         for (int i = 0; i < segment.getNumStages(); i++)
         {
             if (segment.getStageByIndex(i) == segment.getCurr())
             {
-                cout << "    ";
+
                 if (segment.getStageByIndex(i)->getPast() != NULL)
                 {
                     cout << "|" << GetZoneShort(segment.getStageByIndex(i)->getPast()->getName()) << "|";
+                    file_pointer << "|" << GetZoneShort(segment.getStageByIndex(i)->getPast()->getName()) << "|";
                 }
                 else
                 {
                     cout << "|" << "-----------" << "|";
+                    file_pointer << "|" << "-----------" << "|";
                 }
                 
                 cout << " <<< " << "|" << GetZoneShort(segment.getStageByIndex(i)->getName()) << "|" << " >>> ";
+                file_pointer << " <<< " << "|" << GetZoneShort(segment.getStageByIndex(i)->getName()) << "|" << " >>> ";
 
                 if (segment.getStageByIndex(i)->getFuture() != NULL)
                 {
                     cout << "|" << GetZoneShort(segment.getStageByIndex(i)->getFuture()->getName()) << "|";
+                    file_pointer << "|" << GetZoneShort(segment.getStageByIndex(i)->getFuture()->getName()) << "|";
                 }
                 else
                 {
                     cout << "|" << "-----------" << "|";
+                    file_pointer << "|" << "-----------" << "|";
                 }
+
                 cout << endl;
+                file_pointer << endl;
             }
             else
             {
-                cout << "    ";
+
                 if (segment.getStageByIndex(i)->getPast() != NULL)
                 {
                     cout << " " << GetZoneShort(segment.getStageByIndex(i)->getPast()->getName()) << " ";
+                    file_pointer << " " << GetZoneShort(segment.getStageByIndex(i)->getPast()->getName()) << " ";
                 }
                 else
                 {
                     cout << " " << "-----------" << " ";
+                    file_pointer << " " << "-----------" << " ";
                 }
                 
                 cout << "     " << " " << GetZoneShort(segment.getStageByIndex(i)->getName()) << " " << "     ";
+                file_pointer << "     " << " " << GetZoneShort(segment.getStageByIndex(i)->getName()) << " " << "     ";
 
                 if (segment.getStageByIndex(i)->getFuture() != NULL)
                 {
                     cout << " " << GetZoneShort(segment.getStageByIndex(i)->getFuture()->getName()) << " ";
+                    file_pointer << " " << GetZoneShort(segment.getStageByIndex(i)->getFuture()->getName()) << " ";
                 }
                 else
                 {
                     cout << " " << "-----------" << " ";
+                    file_pointer << " " << "-----------" << " ";
                 }
+
                 cout << endl;
+                file_pointer << endl;
             }
         }
+
         cout << endl;
+        file_pointer << endl;
+
+        file_pointer.close();
 
         // If player enters a boss stage, clear the segment tracker
         // Increment current_segment counter
-        // Update OBS integration
         if (input == pp3g || input == cc3g || input == tt3g || input == qq3g || input == ww3g || input == ss3g || input == mm3g || input == pp3b || input == cc3b || input == tt3b || input == qq3b || input == ww3b || input == ss3b || input == mm3b)
         {
             segment.clearSegment();
             current_segment++;
-
-            if (input == pp3g || input == pp3b) {isBossActive[0] = false;}
-            else if (input == cc3g || input == cc3b) {isBossActive[1] = false;}
-            else if (input == tt3g || input == tt3b) {isBossActive[2] = false;}
-            else if (input == qq3g || input == qq3b) {isBossActive[3] = false;}
-            else if (input == ww3g || input == ww3b) {isBossActive[4] = false;}
-            else if (input == ss3g || input == ss3b) {isBossActive[5] = false;}
-            else if (input == mm3g || input == mm3b) {isBossActive[6] = false;}
-
-            for (int i = 0; i < 7; i++)
-            {
-                file_pointer.open(file_name + file_index[i] + file_ext);
-                if (isBossActive[i])
-                {
-                    file_pointer << "XX";
-                }
-                else
-                {
-                    file_pointer << "";
-                }
-                file_pointer.close();
-            }
         }
 
         // Wait for next user input

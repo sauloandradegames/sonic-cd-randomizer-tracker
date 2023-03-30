@@ -439,10 +439,13 @@ int main()
         file_pointer.open(file_name + file_ext);
 
         cout << "====" << " SEGMENT " << current_segment+1 << " of " << total_segment << " || " << "LEVELS VISITED " << segment.getNumStages() << " of " << "9 " << "====" << endl;
-        file_pointer << "====" << " SEGMENT " << current_segment+1 << " of " << total_segment << " || " << "LEVELS VISITED " << segment.getNumStages() << " of " << "9 " << "====" << endl;
-
+        file_pointer << "SEGMENT " << current_segment+1 << " of " << total_segment << " || " << "LEVELS VISITED " << segment.getNumStages() << " of " << "9 " << endl;
+        //file_pointer << "SEGMENT " << current_segment+1 << " of " << total_segment << endl;
+        //file_pointer << "LEVELS  " << segment.getNumStages() << " of " << "9 " << endl;
+        
         cout << "NOW ENTERING: " << GetZone(segment.getCurr()->getName()) << endl;
-        file_pointer << "NOW ENTERING: " << GetZone(segment.getCurr()->getName()) << endl;
+        file_pointer << "NOW ON  " << GetZone(segment.getCurr()->getName()) << endl;
+        file_pointer << endl;
 
         cout << "GOAL  : ";
         file_pointer << "GOAL  : ";
@@ -493,7 +496,7 @@ int main()
         // Print out and write on file their destinations for time travels
 
         cout  << "|   PAST    |" << " <<< " << "|   GOAL    |" << " >>> " << "|  FUTURE   |" << endl;
-        file_pointer  << "|   PAST    |" << " <<< " << "|   GOAL    |" << " >>> " << "|  FUTURE   |" << endl;
+        file_pointer  << "|   PAST    |   GOAL    |  FUTURE   |" << endl;
 
         for (int i = 0; i < segment.getNumStages(); i++)
         {
@@ -512,7 +515,7 @@ int main()
                 }
                 
                 cout << " <<< " << "|" << GetZoneShort(segment.getStageByIndex(i)->getName()) << "|" << " >>> ";
-                file_pointer << " <<< " << "|" << GetZoneShort(segment.getStageByIndex(i)->getName()) << "|" << " >>> ";
+                file_pointer << GetZoneShort(segment.getStageByIndex(i)->getName());
 
                 if (segment.getStageByIndex(i)->getFuture() != NULL)
                 {
@@ -543,7 +546,7 @@ int main()
                 }
                 
                 cout << "     " << " " << GetZoneShort(segment.getStageByIndex(i)->getName()) << " " << "     ";
-                file_pointer << "     " << " " << GetZoneShort(segment.getStageByIndex(i)->getName()) << " " << "     ";
+                file_pointer << GetZoneShort(segment.getStageByIndex(i)->getName());
 
                 if (segment.getStageByIndex(i)->getFuture() != NULL)
                 {

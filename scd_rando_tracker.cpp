@@ -356,21 +356,16 @@ int main()
     int total_segment = 7;   // How many segments we have in this randomizer?
 
     /* OBS Integration stuff */
-    // Visual tracker for OBS.
-    // Setting things up on OBS can be a bit messy, but it works
-    // Trust me ;)
-    bool isBossActive[7] = {true, true, true, true, true, true, true};
+    // Text file to be showed up on OBS
+    // I hope I may be able to create a proper visual tracker in the future
     string file_name = "tracker";
     string file_ext = ".txt";
     ofstream file_pointer;
 
     // Initialization OBS integration
-    for (int i = 0; i < 7; i++)
-    {
-        file_pointer.open(file_name + file_ext);
-        file_pointer << "Ready";
-        file_pointer.close();
-    }
+    file_pointer.open(file_name + file_ext);
+    file_pointer << "Ready";
+    file_pointer.close();
 
     /* ============= */
     /* Program Start */
@@ -414,39 +409,46 @@ int main()
         // Add stage to segment
         if (GetZone(input) != "")
         {
-            if (input_goal == "g")
+            if (input_goal == "g") // Goal case
             {
                 segment.insert(0, input);
             }
-            else if (input_goal == "p")
+            else if (input_goal == "p") // Past case
             {
                 segment.insert(1, input);
             }
-            else if (input_goal == "f")
+            else if (input_goal == "f") // Future case
             {
                 segment.insert(2, input);
             }
-            else
+            else // Everything else
             {
                 cout << "ERROR: Invalid Goal" << endl;
             }
         }
 
-        // Open file stream for OBS integration
-        // Print out and write on file info about current stage
+        /* Print out and write on file tracker information */
+        // Clear terminal
         system("clear");
-       
+
+        // Open OBS integration file stream
         file_pointer.open(file_name + file_ext);
 
+        // Print out on terminal randomizer informaiton
+        // Write on file stream those same information
+
+        // Current segment + levels visited on current segment
         cout << "====" << " SEGMENT " << current_segment+1 << " of " << total_segment << " || " << "LEVELS VISITED " << segment.getNumStages() << " of " << "9 " << "====" << endl;
         file_pointer << "SEGMENT " << current_segment+1 << " of " << total_segment << " || " << "LEVELS VISITED " << segment.getNumStages() << " of " << "9 " << endl;
-        //file_pointer << "SEGMENT " << current_segment+1 << " of " << total_segment << endl;
-        //file_pointer << "LEVELS  " << segment.getNumStages() << " of " << "9 " << endl;
         
+        // Players current location
         cout << "NOW ENTERING: " << GetZone(segment.getCurr()->getName()) << endl;
         file_pointer << "NOW ON  " << GetZone(segment.getCurr()->getName()) << endl;
         file_pointer << endl;
 
+        // Player destination when beating the level
+        // if case: when player is visiting the stage for the first time
+        // else case: when player is revisiting the stage
         cout << "GOAL  : ";
         file_pointer << "GOAL  : ";
 
@@ -461,6 +463,7 @@ int main()
             file_pointer << GetZone(segment.getCurr()->getGoal()->getName()) << endl;
         }
 
+        // Player destination if player time travel to PAST
         cout << "PAST  : ";
         file_pointer << "PAST  : ";
 
@@ -475,6 +478,7 @@ int main()
             file_pointer << GetZone(segment.getCurr()->getPast()->getName()) << endl;
         }
 
+        // Player destination if player time travel to FUTURE
         cout << "FUTURE: ";
         file_pointer << "FUTURE: ";
 

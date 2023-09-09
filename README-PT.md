@@ -4,10 +4,6 @@ Um tracker para Sonic CD Randomizer, desenvolvido em C++, especificamente para o
 
 Dentre todos os modos disponíveis no Randomizer, o modo "Segments" é, para mim, o modo mais interessante ao oferecer um bom desafio e um fácil rastreio do progresso do jogador pelo randomizer. A maioria dos modos esbarra no problema de ser muito difícil rastrear onde o jogador se encontra no randomizer ou quem está na liderança em um contexto de corrida. Para piorar, há a possibilidade de um jogador, subitamente, alcançar o final do randomizer via time travel direto para os créditos, estragando a diversão do randomizer como um todo.
 
-## Requisitos
-
-Este tracker foi desenvolvido em C++ para ser executado em um ambiente Linux. Para usuários Windows é recomendado a instalação do **Subsistema do Windows para Linux (WSL)**, seguido da instalação de uma distro Linux via **Microsoft Store**.
-
 ## Segments?
 
 Neste modo do Randomizer, o jogo define sete zonas (**segmentos**) contendo 8 fases, além de uma última fase com um Chefão. As 8 primeiras fases podem ser quaisquer Atos 1 e 2 e suas respectivas Time Zones (`Past`, `Present`, `Good Future` e `Bad Future`). Chefões pode ser qualquer Ato 3 no Good Future ou Bad Future. No final, o jogador enfrentará 7 dos 14 possíveis Chefões.
@@ -34,3 +30,31 @@ O tracker é funcional, porém ainda precisa de polimento.
 - O tracker não consegue montar o segmento, apenas listando as fases na ordem que foram visitadas pelo jogador, e não na ordem que se encontram no randomizer. Este é o meu maior desafio ao montar o tracker.
 - Minha meta final é montar um tracker com uma interface gráfica, de mais fácil uso para o usuário e de mais fácil compreensão.
 - Atualmente, o Randomizer permite a opção de gerar um *spoiler log* gráfico. Meu desejo é montar um tracker com uma visualização gráfica que monte o segmento a medida que o jogador joga e preenche as informações
+
+## Requisitos
+
+Este projeto foi gerado com [Angular CLI](https://github.com/angular/angular-cli) versão 16.1.5.
+
+### Servidor de Desenvolvimento
+
+Para iniciar um servidor de desenvolvimento, execute `ng serve`. Visite `http://localhost:4200/`. A aplicação deverá recarregar automaticamente em caso de alterações nos arquivos do código-fonte.
+
+### Geração de Código
+
+Para gerar novos componentes, execute `ng generate component component-name`. Você também pode executar `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+### Construindo o projeto
+
+Para construir o projeto, execute `ng build`. Os artefatos do projeto serão armazenados na pasta `dist/`.
+
+### Executando testes unitários
+
+Para rodar testes unitários, execute `ng test`. Testes unitários são executados via [Karma](https://karma-runner.github.io).
+
+### Executando testes ponta-a-ponta
+
+Para executar testes ponta-a-ponta usando uma plataforma de sua escolha, execute `ng e2e`. Para usar este comando, primeiramente você precisa adicionar um pacote que implemente capacidades de teste ponta-a-ponta.
+
+### Ajuda
+
+Se você precisa de mais ajuda referente ao Angular CLI, execute `ng help`. Você também pode visitar a página [Angular CLI Overview and Command Reference](https://angular.io/cli) *(em Inglês)*.
